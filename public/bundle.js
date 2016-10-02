@@ -27169,14 +27169,21 @@
 	var Profile = React.createClass({
 	    displayName: 'Profile',
 
+	    mixins: [ReactFireMixin],
 	    getInitialState: function getInitialState() {
 	        return {
 	            notes: [],
-	            bio: {
-	                name: 'Dan Le'
-	            },
+	            bio: {},
 	            repos: []
 	        };
+	    },
+	    componentDidMount: function componentDidMount() {
+	        this.ref = new Firebase('https://github-note-taker.firebaseio.com/');
+	        var childRef = this.ref.child(this.props.params.username);
+	        this.bindAsArray(childRef, 'notes');
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        this.unbind('notes');
 	    },
 	    render: function render() {
 	        return React.createElement(
@@ -27190,12 +27197,12 @@
 	            React.createElement(
 	                'div',
 	                { className: 'col-md-4' },
-	                React.createElement(Repos, { repos: this.state.repos })
+	                React.createElement(Repos, { username: this.props.params.username, repos: this.state.repos })
 	            ),
 	            React.createElement(
 	                'div',
 	                { className: 'col-md-4' },
-	                React.createElement(Notes, { notes: this.state.notes })
+	                React.createElement(Notes, { username: this.props.params.username, notes: this.state.notes })
 	            )
 	        );
 	    }
@@ -27272,6 +27279,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var NotesList = __webpack_require__(248);
 
 	var Notes = React.createClass({
 	    displayName: 'Notes',
@@ -27280,12 +27288,54 @@
 	        return React.createElement(
 	            'div',
 	            null,
-	            'Notes'
+	            React.createElement(
+	                'h3',
+	                null,
+	                ' Notes for ',
+	                this.props.username,
+	                ' '
+	            ),
+	            React.createElement(NotesList, { notes: this.props.notes })
 	        );
 	    }
 	});
 
 	module.exports = Notes;
+
+/***/ },
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var NotesList = React.createClass({
+	    displayName: 'NotesList',
+
+	    render: function render() {
+	        var notes = this.props.notes.map(function (note, index) {
+	            return React.createElement(
+	                'li',
+	                { className: 'list-group-item', key: index },
+	                note['.value']
+	            );
+	        });
+	        return React.createElement(
+	            'ul',
+	            { className: 'list-group' },
+	            notes
+	        );
+	    }
+	});
+
+	module.exports = NotesList;
 
 /***/ }
 /******/ ]);
