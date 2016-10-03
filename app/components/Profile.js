@@ -21,6 +21,9 @@ var Profile = React.createClass({
     componentWillUnmount() {
         this.unbind('notes')
     },
+    handleAddNote(newNote) {
+        this.ref.child(this.props.params.username).child(this.state.notes.length).set(newNote)
+    },
     render() {
         return (
             <div className="row">
@@ -31,7 +34,11 @@ var Profile = React.createClass({
                     <Repos username={this.props.params.username} repos={this.state.repos}/>
                 </div>
                 <div className="col-md-4">
-                    <Notes username={this.props.params.username} notes={this.state.notes}/>
+                    <Notes
+                        username={this.props.params.username}
+                        notes={this.state.notes}
+                        addNote={this.handleAddNote}
+                    />
                 </div>
             </div>
         )
