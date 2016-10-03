@@ -27107,7 +27107,6 @@
 
 	var Main = React.createClass({
 	    displayName: "Main",
-
 	    render: function render() {
 	        return React.createElement(
 	            "div",
@@ -27142,7 +27141,6 @@
 
 	var Home = React.createClass({
 	    displayName: "Home",
-
 	    render: function render() {
 	        return React.createElement(
 	            "h2",
@@ -27221,6 +27219,10 @@
 	var Repos = React.createClass({
 	    displayName: 'Repos',
 
+	    propTypes: {
+	        username: React.PropTypes.string.isRequired,
+	        repos: React.PropTypes.array.isRequired
+	    },
 	    render: function render() {
 	        return React.createElement(
 	            'div',
@@ -27247,6 +27249,10 @@
 	var UserProfile = React.createClass({
 	    displayName: 'UserProfile',
 
+	    propTypes: {
+	        username: React.PropTypes.string.isRequired,
+	        bio: React.PropTypes.object.isRequired
+	    },
 	    render: function render() {
 	        return React.createElement(
 	            'div',
@@ -27279,11 +27285,15 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var NotesList = __webpack_require__(248);
+	var NotesList = __webpack_require__(242);
 
 	var Notes = React.createClass({
 	    displayName: 'Notes',
 
+	    propTypes: {
+	        username: React.PropTypes.string.isRequired,
+	        notes: React.PropTypes.array.isRequired
+	    },
 	    render: function render() {
 	        return React.createElement(
 	            'div',
@@ -27303,13 +27313,7 @@
 	module.exports = Notes;
 
 /***/ },
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27318,7 +27322,6 @@
 
 	var NotesList = React.createClass({
 	    displayName: 'NotesList',
-
 	    render: function render() {
 	        var notes = this.props.notes.map(function (note, index) {
 	            return React.createElement(

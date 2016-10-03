@@ -6,22 +6,22 @@ var Notes = require('./Notes/Notes');
 
 var Profile = React.createClass({
     mixins: [ReactFireMixin],
-    getInitialState: function () {
+    getInitialState() {
         return {
             notes: [],
             bio: {},
             repos: []
         }
     },
-    componentDidMount: function () {
+    componentDidMount() {
         this.ref = new Firebase('https://github-note-taker.firebaseio.com/');
         var childRef = this.ref.child(this.props.params.username);
         this.bindAsArray(childRef, 'notes');
     },
-    componentWillUnmount: function () {
+    componentWillUnmount() {
         this.unbind('notes')
     },
-    render: function () {
+    render() {
         return (
             <div className="row">
                 <div className="col-md-4">
