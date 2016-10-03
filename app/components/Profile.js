@@ -3,6 +3,7 @@ var Router = require('react-router');
 var Repos = require('./Github/Repos');
 var UserProfile = require('./Github/UserProfile');
 var Notes = require('./Notes/Notes');
+var helpers = require('../utils/helpers');
 
 var Profile = React.createClass({
     mixins: [ReactFireMixin],
@@ -17,6 +18,14 @@ var Profile = React.createClass({
         this.ref = new Firebase('https://github-note-taker.firebaseio.com/');
         var childRef = this.ref.child(this.props.params.username);
         this.bindAsArray(childRef, 'notes');
+
+        helpers.getGithubInfo(this.props.params.username)
+            .then(function (data)  {
+                this.setState({
+                    bio: data.bio,
+                    repos: data.repos
+                })
+            }.bind(this))
     },
     componentWillUnmount() {
         this.unbind('notes')

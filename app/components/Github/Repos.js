@@ -6,10 +6,10 @@ var Repos = React.createClass({
         repos: React.PropTypes.array.isRequired
     },
     render() {
+        console.log(this.props.repos)
         return (
             <div>
                 <p>Repots</p>
-
             </div>
         )
     }
