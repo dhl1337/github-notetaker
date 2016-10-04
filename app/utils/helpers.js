@@ -1,19 +1,10 @@
-let axios = require('axios');
+import axios from 'axios';
 
-let getRepos = username => axios.get('https://api.github.com/users/' + username + '/repos');
+const getRepos = username => axios.get(`https://api.github.com/users/${username}/repos`);
 
-let getUserInfo = username => axios.get('https://api.github.com/users/' + username);
+const getUserInfo = username => axios.get(`https://api.github.com/users/${username}`);
 
-let helpers = {
-    getGithubInfo(username) {
-        return axios.all([getRepos(username), getUserInfo(username)])
-            .then(arr => {
-                return {
-                    repos: arr[0].data,
-                    bio: arr[1].data
-                }
-            })
-    }
-};
-
-module.exports = helpers;
+export default function getGithubInfo(username) {
+    return axios.all([getRepos(username), getUserInfo(username)])
+        .then(arr => ({ repos: arr[0].data, bio: arr[1].data }))
+}
